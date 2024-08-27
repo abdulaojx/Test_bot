@@ -9,6 +9,8 @@ const client = new Client({
     ]
 });
 
+TOKEN = 'MTI3MzM2ODg0MTE0OTQ4NTEyNw.G6Rok0.XjVjdsbC-Fj6CoXQeJ9EX6DLBxuNecfWByeh1Y'
+
 // Variabili per tenere traccia dello scrim
 let scrimMessage = null;
 let scrimReactions = new Map();
@@ -183,4 +185,4 @@ client.on('messageReactionAdd', (reaction, user) => {
     }
 });
 
-client.login("process.env.TOKEN");
+client.login("TOKEN");
