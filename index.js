@@ -183,4 +183,4 @@ client.on('messageReactionAdd', (reaction, user) => {
     }
 });
 
-client.login("process.env.token");
+client.login("process.env.TOKEN");
