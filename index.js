@@ -183,4 +183,4 @@ client.on('messageReactionAdd', (reaction, user) => {
     }
 });
 
-client.login(process.env.token);
+client.login("MTI3MzM2ODg0MTE0OTQ4NTEyNw.G6FFpJ.Ljfrj775Hq4ipRQild60eeW-cjeDy9a4TK9pPs");
