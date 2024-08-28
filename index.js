@@ -1,15 +1,16 @@
-const { Client, Intents, MessageActionRow, MessageSelectMenu, MessageEmbed } = require('discord.js');
-const keep_alive = require('./keep_alive.js')
+const { Client, GatewayIntentBits } = require('discord.js');
+
+// Inserisci il token del bot direttamente qui
+const token = 'token';
 
 const client = new Client({
     intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMessageReactions
     ]
 });
-
-TOKEN = 'MTI3MzM2ODg0MTE0OTQ4NTEyNw.G6Rok0.XjVjdsbC-Fj6CoXQeJ9EX6DLBxuNecfWByeh1Y'
 
 // Variabili per tenere traccia dello scrim
 let scrimMessage = null;
@@ -53,7 +54,7 @@ client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand()) return;
 
     if (interaction.commandName === 'scrim') {
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle('Scrim Time!')
             .setDescription('React to this message to join the scrim!')
             .setColor('#0099ff');
@@ -72,7 +73,7 @@ client.on('interactionCreate', async (interaction) => {
             ephemeral: true
         });
 
-        const selectMenu = new MessageSelectMenu()
+        const selectMenu = new StringSelectMenuBuilder()
             .setCustomId('manage-scrim-select')
             .setPlaceholder('Scegli un\'opzione...')
             .addOptions([
@@ -93,7 +94,7 @@ client.on('interactionCreate', async (interaction) => {
                 },
             ]);
 
-        const row = new MessageActionRow()
+        const row = new ActionRowBuilder()
             .addComponents(selectMenu);
 
         const dmChannel = await interaction.user.createDM();
@@ -121,13 +122,13 @@ client.on('interactionCreate', async (interaction) => {
 
 // Gestione delle interazioni con i componenti
 client.on('interactionCreate', async (interaction) => {
-    if (interaction.isSelectMenu()) {
+    if (interaction.isStringSelectMenu()) {
         if (interaction.customId === 'manage-scrim-select') {
             const selectedOption = interaction.values[0];
 
             if (selectedOption === 'stop') {
                 if (scrimMessage) {
-                    const embed = new MessageEmbed()
+                    const embed = new EmbedBuilder()
                         .setTitle('Scrim Ended')
                         .setDescription('This scrim has been ended.')
                         .setColor('#ff0000');
@@ -185,4 +186,4 @@ client.on('messageReactionAdd', (reaction, user) => {
     }
 });
 
-client.login("TOKEN");
+client.login(token);
